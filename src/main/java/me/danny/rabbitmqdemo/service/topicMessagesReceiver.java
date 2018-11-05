@@ -1,15 +1,17 @@
 package me.danny.rabbitmqdemo.service;
 
-import me.danny.rabbitmqdemo.vo.UserEntity;
+
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 @Component
-@RabbitListener(queues = "user")
-public class UserReceiver {
+@RabbitListener(queues = "topic.messages")
+public class topicMessagesReceiver {
+
     @RabbitHandler
-    public void process(UserEntity user) {
-        System.out.println("user receive  : " + user.toString());
+    public void process(String msg) {
+        System.out.println(".# topicMessagesReceiver : " +msg);
     }
+
 }

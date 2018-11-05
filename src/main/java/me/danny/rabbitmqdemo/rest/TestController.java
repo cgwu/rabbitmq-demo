@@ -2,6 +2,7 @@ package me.danny.rabbitmqdemo.rest;
 
 import lombok.extern.slf4j.Slf4j;
 import me.danny.rabbitmqdemo.service.HelloSender;
+import me.danny.rabbitmqdemo.service.TopicSender;
 import me.danny.rabbitmqdemo.vo.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,9 @@ public class TestController {
 
     @Autowired
     private HelloSender helloSender;
+
+    @Autowired
+    private TopicSender topicSender;
 
     @GetMapping("/send")
     @ResponseBody
@@ -33,4 +37,15 @@ public class TestController {
         this.helloSender.send(u);
         return  "send user complete";
     }
+
+    /**
+     * topic exchange类型rabbitmq测试
+     */
+    @GetMapping("/topic")
+    @ResponseBody
+    public String topicTest() {
+        topicSender.send();
+        return "done";
+    }
+
 }

@@ -30,7 +30,7 @@ public class HelloSender {
     }
 
     public void send(UserEntity u) {
-        this.rabbitTemplate.convertAndSend("userQueue", u);
+        this.rabbitTemplate.convertAndSend("user", u);
     }
 
 }
