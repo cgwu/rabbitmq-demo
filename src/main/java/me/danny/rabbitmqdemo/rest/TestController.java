@@ -1,6 +1,7 @@
 package me.danny.rabbitmqdemo.rest;
 
 import lombok.extern.slf4j.Slf4j;
+import me.danny.rabbitmqdemo.service.FanoutSender;
 import me.danny.rabbitmqdemo.service.HelloSender;
 import me.danny.rabbitmqdemo.service.TopicSender;
 import me.danny.rabbitmqdemo.vo.UserEntity;
@@ -20,6 +21,9 @@ public class TestController {
 
     @Autowired
     private TopicSender topicSender;
+
+    @Autowired
+    private FanoutSender fanoutSender;
 
     @GetMapping("/send")
     @ResponseBody
@@ -46,6 +50,15 @@ public class TestController {
     public String topicTest() {
         topicSender.send();
         return "done";
+    }
+
+    /**
+     * fanout exchange类型rabbitmq测试
+     */
+    @GetMapping("/fanout")
+    public String fanoutTest() {
+        fanoutSender.send();
+        return "Ok";
     }
 
 }
