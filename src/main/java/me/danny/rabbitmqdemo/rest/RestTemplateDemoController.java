@@ -42,15 +42,33 @@ public class RestTemplateDemoController {
         return "caller done";
     }
 
+
+    /**
+     * 被调用者
+     * @return
+     */
+    @PostMapping("/callee")
+    @ResponseBody
+//    public String callee(@RequestBody UserEntity u)  {
+    public String callee(@RequestBody Map<String,String> u) {
+        log.info("被调用者接收到的参数: {}", u);
+        return "callee done";
+    }
+
     @GetMapping("/caller2")
     @ResponseBody
     public String caller2() {
+        UserEntity u = new UserEntity(110,"张三","123");
         MultiValueMap<String, String> requestEntity = new LinkedMultiValueMap<>();
-        requestEntity.add("clientFlag", "clientFlag xyz");
-        requestEntity.add("xml", "xml data");
-        requestEntity.add("verifyData", "md5sum");
+        requestEntity.add("id","123");
+        requestEntity.add("name","张三");
+        requestEntity.add("pass","xyz");
 
-        String notify3rdPartyUrl = "http://localhost:8080/rest/callee";
+//        requestEntity.add("clientFlag", "clientFlag xyz");
+//        requestEntity.add("xml", "xml data");
+//        requestEntity.add("verifyData", "md5sum");
+
+        String notify3rdPartyUrl = "http://localhost:8080/rest/callee2";
         try {
             RestTemplate rest = new RestTemplate();
 
@@ -67,15 +85,18 @@ public class RestTemplateDemoController {
     }
 
     /**
-     * 被调用者
+     *
+     * @RequestParam 可接收：
+     * Content type 'application/x-www-form-urlencoded;charset=UTF-8'
+     *
+     * @param u
      * @return
      */
-    @PostMapping("/callee")
+    @PostMapping("/callee2")
     @ResponseBody
-//    public String callee(@RequestBody UserEntity u)  {
-    public String callee(@RequestBody Map<String,String> u) {
-        log.info("被调用者接收到的参数: {}", u);
-        return "callee done";
+    public String callee2(@RequestParam Map<String,String> u) {
+        log.info("callee2 被调用者接收到的参数: {}", u);
+        return "callee2 done";
     }
 
 }
